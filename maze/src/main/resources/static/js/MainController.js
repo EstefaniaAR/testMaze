@@ -15,7 +15,6 @@ app.controller('MainController', ['$scope','$http','$location', function($scope,
 			.then(function successCallback(response) 
 			{
 			    $scope.maze = response.data;
-
 			}, function errorCallback(response) 
 			{
 			    alert("Error:"+JSON.stringify(response.data));

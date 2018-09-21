@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.maze.dao.MazeDAO;
 import com.example.maze.domain.Cell;
 import com.example.maze.domain.Coordinate;
 import com.example.maze.domain.Maze;
@@ -13,7 +14,7 @@ import com.example.maze.domain.Maze;
 
 
 @Repository
-public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
+public class MazeDaoImpl implements MazeDAO
 {
 	public Maze generateMaze() 
 	{
@@ -88,6 +89,16 @@ public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
 		return maze;
 	}
 
+	@Override
+	public Maze putMove(Maze maze)
+	{
+		String move = maze.getMove();
+		Coordinate current = maze.getCurrent();
+		
+		
+		
+		return maze;
+	}
 
 	/*Recursive Backtracking*/
 	private void dig(int x , int y, Maze maze)
@@ -221,4 +232,5 @@ public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
 			return true;
 		return false;
 	}
+
 }

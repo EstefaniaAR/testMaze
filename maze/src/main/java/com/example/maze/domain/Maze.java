@@ -6,9 +6,13 @@ public class Maze
 	private int witdh;
 	private int height ;
 	private Cell[][] grid;
+	private Cell[][] path;
+	private Cell[][] position;
 	private Coordinate start;
 	private Coordinate end;
 	private String maze;
+	private Coordinate current;
+	private String move;
 	
 	public Maze()
 	{
@@ -62,5 +66,37 @@ public class Maze
 	public void setEnd(Coordinate end) {
 		this.end = end;
 	}
-	
+
+	public Coordinate getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Coordinate current) {
+		this.current = current;
+	}
+
+	public String getMove() {
+		return move;
+	}
+
+	public void setMove(String move) {
+		this.move = move;
+	}
+
+	public Cell[][] getPath() {
+		return path;
+	}
+
+	public void setPath(Cell[][] path) {
+		this.path = path;
+	}
+
+	public Cell[][] getPosition() {
+		return position;
+	}
+
+	public void setPosition(Cell[][] position) {
+		this.position = position;
+	}
+
 }
