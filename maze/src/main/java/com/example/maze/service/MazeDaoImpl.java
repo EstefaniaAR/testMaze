@@ -22,6 +22,9 @@ public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
 		
 		int sHeight = (int)(Math.random()*14)+1;
 		int sWitdh= (int )(Math.random()*14)+1;
+		
+		int eHeight = (int)(Math.random()*14)+1;
+		int eWitdh= (int )(Math.random()*14)+1;
 
 		Cell [][] grid= new Cell [witdh][height];
 
@@ -44,6 +47,8 @@ public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
 		}
 		
 		Coordinate start = new Coordinate(sWitdh,sHeight);
+		Coordinate end = new Coordinate(eWitdh,eHeight);
+		
 		Maze maze = new Maze();
 		maze.setGrid(grid);
 		maze.setHeight(height);
@@ -52,22 +57,34 @@ public class MazeDaoImpl implements com.example.maze.dao.MazeDAO
 		
 		dig(start.getX(),start.getY(),maze);
 		String m="";
+		grid[start.getX()][start.getY()].setValue("S");
+		
+		do
+		{
+			eHeight = (int)(Math.random()*14)+1;
+			eWitdh= (int )(Math.random()*14)+1;
+			end = new Coordinate(eWitdh,eHeight);
+			if(grid[eWitdh][eHeight].getValue().equals(" "))
+			{
+				end.setValue("F");
+				grid[eWitdh][eHeight].setValue("F");
+			}
+				
+		}while (end.getValue()==null);
+		
 		for (int x=0; x< witdh; x++)
 		{
 			for(int y=0; y < height; y++)
 			{
 				if(grid[x][y].getValue().equals("O"))
 					grid[x][y].setValue("X");
-				System.out.print(grid[x][y].getValue());
 				m = m+grid[x][y].getValue();
 			}
 			m= m+"\n";
-			System.out.println();
 		}
-		maze.setMaze(m);
-		System.out.println("----");
-		System.out.println(m);
-		
+
+					
+		maze.setMaze(m);		
 		return maze;
 	}
 

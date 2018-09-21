@@ -7,6 +7,7 @@ public class Maze
 	private int height ;
 	private Cell[][] grid;
 	private Coordinate start;
+	private Coordinate end;
 	private String maze;
 	
 	public Maze()
@@ -52,6 +53,14 @@ public class Maze
 
 	public void setMaze(String maze) {
 		this.maze = maze;
+	}
+
+	public Coordinate getEnd() {
+		return end;
+	}
+
+	public void setEnd(Coordinate end) {
+		this.end = end;
 	}
 	
 }
