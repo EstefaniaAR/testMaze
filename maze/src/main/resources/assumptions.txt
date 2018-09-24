@@ -1,0 +1,11 @@
+1. The maze always has a solution 
+2. The maze is randomly generated 
+3. The player is moving through the maze, without assistance
+4. The travel of the robot must be shown in the UI
+5. All the operations over the maze will be completed using java in case the maze will be saved in a repository in future
+6. The patter design will be DAO
+7. The technology to use is spring boot and rest 
+8. The end points will consume by using angularjs
+9. Application will show the original maze and the playable maze
+10. The game has no explicit end, the player can explore as many times as he or she wants the maze
+11. No war was generated because it is no requested in the instructions 

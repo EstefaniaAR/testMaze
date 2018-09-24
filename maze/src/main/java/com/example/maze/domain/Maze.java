@@ -13,6 +13,8 @@ public class Maze
 	private String maze;
 	private Coordinate current;
 	private String move;
+	private Coordinate request;
+	private String sPath;
 	
 	public Maze()
 	{
@@ -99,4 +101,20 @@ public class Maze
 		this.position = position;
 	}
 
+	public Coordinate getRequest() {
+		return request;
+	}
+
+	public void setRequest(Coordinate request) {
+		this.request = request;
+	}
+
+	public String getsPath() {
+		return sPath;
+	}
+
+	public void setsPath(String sPath) {
+		this.sPath = sPath;
+	}
+	
 }

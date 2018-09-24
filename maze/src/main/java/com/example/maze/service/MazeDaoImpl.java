@@ -1,6 +1,7 @@
 package com.example.maze.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -85,7 +86,11 @@ public class MazeDaoImpl implements MazeDAO
 		}
 
 					
-		maze.setMaze(m);		
+		maze.setMaze(m);
+		maze.setCurrent(start);
+		maze.setPath(Arrays.copyOf(grid, grid.length));
+		maze.setsPath(m);
+		maze.setPosition(Arrays.copyOf(grid, grid.length));
 		return maze;
 	}
 
@@ -94,8 +99,91 @@ public class MazeDaoImpl implements MazeDAO
 	{
 		String move = maze.getMove();
 		Coordinate current = maze.getCurrent();
-		
-		
+		Coordinate request = null;
+		int x = current.getX();
+		int y = current.getY();
+		int witdh= maze.getWitdh();
+		int height = maze.getHeight();
+		Cell[][] grid = maze.getPath();
+		if(move.equals("up"))
+		{
+			if(isValid(x-1,y,witdh,height,grid) )
+			{
+				if(!isWall(x-1,y,grid))
+				{
+					current= new Coordinate(x-1,y,getObject(x-1,y,grid));
+					request = new Coordinate(x-1,y,getObject(x-1,y,maze.getGrid()));
+					grid[x][y].setValue("*");
+					grid[x-1][y].setValue("°");
+					maze.setsPath(generateStringMaze(witdh,height,grid));
+					maze.setPath(grid);
+				}
+				else 
+					request = new Coordinate(x-1,y,getObject(x-1,y,maze.getGrid()));
+			}
+			else 
+				request = new Coordinate(x-1,y,"OUT OF MAZE");
+		}
+		else if(move.equals("down"))
+		{
+			if(isValid(x+1,y,witdh,height,grid))
+			{
+				if(!isWall(x+1,y,grid))
+				{
+					current= new Coordinate(x+1,y,getObject(x+1,y,grid));
+					grid[x][y].setValue("*");
+					grid[x+1][y].setValue("°");
+					maze.setsPath(generateStringMaze(witdh,height,grid));
+					request = new Coordinate(x+1,y,getObject(x+1,y,maze.getGrid()));
+					maze.setPath(grid);
+				}
+				else 
+					request = new Coordinate(x+1,y,getObject(x+1,y,maze.getGrid()));
+			}
+			else 
+				request = new Coordinate(x+1,y,"OUT OF MAZE");
+		}
+		else if(move.equals("left"))
+		{
+			if(isValid(x, y-1,witdh,height, grid))
+			{
+				if(!isWall(x,y-1,grid))
+				{
+					current = new Coordinate(x,y-1,getObject(x,y-1,grid));
+					grid[x][y].setValue("*");
+					grid[x][y-1].setValue("°");
+					maze.setsPath(generateStringMaze(witdh,height,grid));
+					request = new Coordinate(x,y-1,getObject(x,y-1,maze.getGrid()));
+					maze.setPath(grid);
+				}
+				else 
+					request = new Coordinate(x,y-1,getObject(x,y-1,maze.getGrid()));
+			}
+			else 
+				request = new Coordinate(x,y-1,"OUT OF MAZE");
+		}
+		else if(move.equals("right"))
+		{
+			if(isValid(x,y+1,witdh,height,grid))
+			{
+				if(!isWall(x,y+1,grid))
+				{
+					current = new Coordinate(x,y+1,getObject(x,y+1,grid));
+					grid[x][y].setValue("*");
+					grid[x][y+1].setValue("°");
+					maze.setsPath(generateStringMaze(witdh,height,grid));
+					request = new Coordinate(x,y+1,getObject(x,y+1,maze.getGrid()));
+					maze.setPath(grid);
+				}
+				else 
+					request = new Coordinate(x,y+1,getObject(x,y+1,maze.getGrid()));
+			}
+			else 
+				request = new Coordinate(x,y+1,"OUT OF MAZE");
+		}
+			
+		maze.setRequest(request);
+		maze.setCurrent(current);
 		
 		return maze;
 	}
@@ -211,7 +299,14 @@ public class MazeDaoImpl implements MazeDAO
 		}
 		return false;
 	}
-	
+	private boolean isValid(int x, int y, int witdh, int height, Cell[][]grid)
+	{
+		if(x > 0 && x < witdh && y >0 && y < height )
+		{
+				return true;
+		}
+		return false;
+	}
 	private boolean isNeedWall(int x,int y,int witdh, int height, Cell[][]grid)
 	{
 		if(exists(x,y,witdh,height,grid))
@@ -219,6 +314,36 @@ public class MazeDaoImpl implements MazeDAO
 				return true;
 		return false;
 	}
+	private String getObject(int x,int y, Cell[][]grid)
+	{
+		String key = grid[x][y].getValue();
+		switch (key)
+		{
+			case "X":
+				return "WALL";
+			case " ":
+				return "SPACE";
+			case "S":
+				return "ENTRY";
+			case "F":
+				return "EXIT";
+		}
+		return "NONE";
+	}
+	private String generateStringMaze(int witdh,int height,Cell[][]grid)
+	{
+		String m="";
+		for (int x=0; x< witdh; x++)
+		{
+			for(int y=0; y < height; y++)
+			{
+				m = m+grid[x][y].getValue();
+			}
+			m= m+"\n";
+		}
+		return m;
+	}
+	
 	private boolean isWall(int x,int y, Cell[][]grid)
 	{
 		if(grid[x][y].getValue().equals("X"))

@@ -39,5 +39,9 @@ public class Coordinate
 	public void setValue(String value) {
 		this.value = value;
 	}
+	@Override
+	public String toString() {
+		return "Coordinate [x=" + x + ", y=" + y + ", value=" + value + "]";
+	}
 	
 }
